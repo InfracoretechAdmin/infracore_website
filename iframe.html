@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="shortcut icon" href="Infracore - Icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Society Registration (iFrame)</title>
+  <style>
+    :root { --blue:#007bff; --green:#00c853; }
+
+    /* Page (grey bg) */
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: #e6e8eb; /* grey main background */
+      overflow-x: hidden;
+    }
+
+    /* Moving dots canvas (behind everything) */
+    #dots {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none; /* don’t block clicks */
+    }
+
+    /* Center wrapper */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: start center;
+      min-height: 100%;
+      padding: 4vmin 2vmin;
+      box-sizing: border-box;
+    }
+    .btn_Close {
+      margin-top: 10px;
+      margin-left: 800px;
+      width: 10%;
+      padding: 7px 10px;
+      border: 0;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 13px;
+      color: #fff;
+      background: #e61818;
+      cursor: pointer;
+    }
+    /* The iframe card */
+    iframe {
+      width: min(92vw, 980px);
+      border: 0;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 16px 40px rgba(16,24,40,.12);
+      /* height will be set from child via postMessage to remove inner scroll */
+    }
+
+    /* Full-bleed on small screens */
+    @media (max-width: 768px) {
+      .wrap { padding: 0; }
+      iframe { width: 100vw; border-radius: 0; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="dots"></canvas>
+
+  <div class="wrap">
+        <button class="btn_Close" type="submit" onclick="closeTab()">Close Form</button>
+    <!-- IMPORTANT: point this to the file below (same folder) -->
+    <iframe id="formFrame" src="form.html" title="Society Registration"></iframe>
+
+  </div>
+
+  <script>
+    /* -------- Moving colorful dots -------- */
+    const canvas = document.getElementById("dots");
+    const ctx = canvas.getContext("2d");
+    function sizeCanvas() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    sizeCanvas();
+
+    const dots = Array.from({length: 70}, () => ({
+      x: Math.random()*innerWidth,
+      y: Math.random()*innerHeight,
+      r: 2 + Math.random()*3.5,
+      dx: (Math.random()-0.5)*1.6,
+      dy: (Math.random()-0.5)*1.6,
+      hue: Math.random()*360
+    }));
+
+    (function animate(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      dots.forEach(d => {
+        d.x += d.dx; d.y += d.dy;
+        if (d.x<0||d.x>canvas.width) d.dx*=-1;
+        if (d.y<0||d.y>canvas.height) d.dy*=-1;
+        d.hue = (d.hue+0.3)%360;
+
+        ctx.beginPath();
+        ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+        ctx.fillStyle = `hsl(${d.hue}, 75%, 55%)`;
+        ctx.fill();
+      });
+      requestAnimationFrame(animate);
+    })();
+
+    addEventListener("resize", sizeCanvas);
+
+    /* -------- Auto-resize iframe to its content (no inner scroll) -------- */
+    const frame = document.getElementById("formFrame");
+    // Set a sensible initial height
+    frame.style.height = "70vh";
+
+    // Listen to child height messages
+    window.addEventListener("message", (e) => {
+      if (!e.data || e.data.type !== "formHeight") return;
+      const padding = matchMedia("(max-width:768px)").matches ? 0 : 32; // space around card
+      const desired = Math.min(e.data.height, window.innerHeight - padding);
+      frame.style.height = desired + "px";
+    });
+    function closeTab() {
+    window.open('', '_self'); // necessary for some browsers
+    window.close();           // closes the current tab
+}
+  </script>
+</body>
+</html>

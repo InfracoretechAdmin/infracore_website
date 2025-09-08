@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Society Registration</title>
+  <style>
+    :root { --blue:#007bff; --green:#00c853; --border:#dfe3e8; --text:#1f2937; }
+
+    * { box-sizing: border-box; }
+    html, body { margin:0; padding:0; background:#fff; color:var(--text); }
+
+    .header {
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      color: #fff;
+      padding: 18px 22px;
+      font-size: clamp(18px, 2.4vw, 28px);
+      font-weight: 800;
+      border-radius: 16px 16px 0 0; /* matches parent rounded corners */
+    }
+
+    .form {
+      padding: 22px;
+    }
+
+    label {
+      display:block;
+      font-weight: 700;
+      font-size: 14px;
+      margin: 10px 0 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0,123,255,.12); }
+
+    /* Two-column responsive grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 16px;
+    }
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    .btn {
+      margin-top: 10px;
+      margin-left: 370px;
+      width: 20%;
+      padding: 14px 16px;
+      border: 0;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 16px;
+      color: #fff;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      cursor: pointer;
+    }
+        .btn_Close {
+      margin-top: 10px;
+      margin-left: 299px;
+      width: 20%;
+      padding: 14px 16px;
+      border: 0;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 16px;
+      color: #fff;
+      background: #e61818;
+      cursor: pointer;
+    }
+    .btn:hover { filter: brightness(.97); }
+  </style>
+</head>
+<body>
+  <div class="header">Society Registration</div>
+
+  <form class="form" oninput="notifyHeight()" onsubmit="event.preventDefault();">
+    <label>Building Name</label>
+    <input type="text" placeholder="Enter building name" />
+
+    <label>Building Address</label>
+    <input type="text" placeholder="Enter full address" />
+
+    <div class="grid">
+      <div>
+        <label>State</label>
+        <input type="text" placeholder="Enter state" />
+      </div>
+      <div>
+        <label>City</label>
+        <input type="text" placeholder="Enter city" />
+      </div>
+
+      <div>
+        <label>Area</label>
+        <input type="text" placeholder="Enter area/locality" />
+      </div>
+      <div>
+        <label>Area Pincode</label>
+        <input type="text" placeholder="Enter pincode" />
+      </div>
+
+      <div>
+        <label>Number of Blocks</label>
+        <input type="number" placeholder="Enter number of blocks" />
+      </div>
+      <div>
+        <label>Number of Lots (per block)</label>
+        <input type="number" placeholder="Enter number of lots" />
+      </div>
+
+      <div>
+        <label>Contact Person Name</label>
+        <input type="text" placeholder="Enter contact person name" />
+      </div>
+      <div>
+        <label>Contact Number</label>
+        <input type="tel" placeholder="Enter phone number" />
+      </div>
+    </div>
+
+    <label>Contact Email</label>
+    <input type="email" placeholder="Enter email" />
+    <button class="btn" type="submit">Register</button>
+  </form>
+
+  <script>
+    // Tell parent our height so it can resize iframe (removes inner scroll)
+    function postHeight() {
+      const h = Math.ceil(document.documentElement.scrollHeight);
+      parent.postMessage({ type: "formHeight", height: h }, "*");
+    }
+    function notifyHeight(){ requestAnimationFrame(postHeight); }
+    addEventListener("load", postHeight);
+    addEventListener("resize", postHeight);
+    // Also observe DOM changes (font loads, etc.)
+    new ResizeObserver(postHeight).observe(document.body);
+    function closeTab() 
+    {
+    window.open('', '_self'); // necessary for some browsers
+    window.close();           // closes the current tab
+    }
+    function closeOrRedirect() 
+    {
+    // Try to close the tab
+    window.open('', '_self');
+    window.close();
+
+    // If close is blocked, redirect to homepage
+    setTimeout(function() {
+        if (!window.closed) {
+            window.location.href = "InfraCore.html";
+        }
+    }, 200);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Society Registration Form in iFrame</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #007bff, #00c853); /* Blue to Green */
+    }
+    iframe {
+      width: 90%;
+      height: 90%;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- iFrame -->
+  <iframe srcdoc='
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background: #fff;
+          height: 100%;
+        }
+        .container {
+          padding: 30px;
+        }
+        h2 {
+          font-size: 22px;
+          font-weight: bold;
+          margin: 0 0 20px 0;
+          color: #fff;
+          background: linear-gradient(90deg, #007bff, #00c853);
+          padding: 15px;
+          border-radius: 10px 10px 0 0;
+        }
+        label {
+          font-size: 14px;
+          font-weight: 600;
+          display: block;
+          margin-bottom: 6px;
+          color: #333;
+        }
+        input {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 6px;
+          margin-bottom: 15px;
+          font-size: 14px;
+        }
+        .row {
+          display: flex;
+          gap: 15px;
+        }
+        .row div {
+          flex: 1;
+        }
+        button {
+          width: 100%;
+          padding: 12px;
+          background: linear-gradient(90deg, #007bff, #00c853);
+          color: white;
+          font-weight: bold;
+          font-size: 16px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+        button:hover {
+          background: linear-gradient(90deg, #0056b3, #009624);
+        }
+      </style>
+    </head>
+    <body>
+      <h2>Society Registration</h2>
+      <div class="container">
+        <label>Building Name</label>
+        <input type="text" placeholder="Enter building name">
+
+        <label>Building Address</label>
+        <input type="text" placeholder="Enter full address">
+
+        <div class="row">
+          <div>
+            <label>State</label>
+            <input type="text" placeholder="Enter state">
+          </div>
+          <div>
+            <label>City</label>
+            <input type="text" placeholder="Enter city">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Area</label>
+            <input type="text" placeholder="Enter area/locality">
+          </div>
+          <div>
+            <label>Area Pincode</label>
+            <input type="text" placeholder="Enter pincode">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Number of Blocks</label>
+            <input type="number" placeholder="Enter number of blocks">
+          </div>
+          <div>
+            <label>Number of Lots (per block)</label>
+            <input type="number" placeholder="Enter number of lots">
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Contact Person Name</label>
+            <input type="text" placeholder="Enter contact person name">
+          </div>
+          <div>
+            <label>Contact Number</label>
+            <input type="tel" placeholder="Enter phone number">
+          </div>
+        </div>
+
+        <label>Contact Email</label>
+        <input type="email" placeholder="Enter email">
+
+        <button type="submit">Register</button>
+      </div>
+    </body>
+    </html>'>
+  </iframe>
+
+</body>
+</html>
